@@ -1,6 +1,7 @@
 // Import Soundworks library (client side)
 import * as soundworks from 'soundworks/client';
 import PlayerRenderer from './PlayerRenderer';
+// import './tuner.js';
 
 const audioContext = soundworks.audioContext;
 
@@ -32,7 +33,7 @@ export default class PlayerExperience extends soundworks.Experience {
   init() {
     // initialize the view
     this.viewTemplate = viewTemplate;
-    this.viewContent = { title: `Let's go!` };
+    this.viewContent = { title: "Let's go!" };
     this.viewCtor = soundworks.CanvasView;
     this.view = this.createView();
   }
@@ -60,6 +61,19 @@ export default class PlayerExperience extends soundworks.Experience {
       src.connect(audioContext.destination);
       src.start(audioContext.currentTime + delay);
     });
+
+    // pitch tracking
+    // var mic = navigator.mediaDevices.getUserMedia({audio: true, video: false})
+    //           .then(function(mediaStream) {
+    //             console.log(mediaStream);
+    //           })
+    //           .catch(function(err) {
+    //             console.log("ERROR: " + err.name);
+    //           });
+
+    // pitch tracking using Tuner()
+    var tuner = new Tuner();
+    console.log(tuner);
 
     // initialize rendering
     this.renderer = new PlayerRenderer(100, 100);

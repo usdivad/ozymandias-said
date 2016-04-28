@@ -13,10 +13,13 @@
 
     <!-- stylesheets -->
     <link rel="stylesheet" href="<%= assetsDomain %>css/main.css?<%= version %>">
+    <link rel="stylesheet" href="<%= assetsDomain %>css/tuner.css">
   </head>
 
   <body>
-    <div id="container" class="container"></div>
+    <div id="container" class="container">
+      <div id="Tuner"></div>
+    </div>
 
     <!-- pass configuration to the client -->
     <script>
@@ -26,6 +29,9 @@
     window.CONFIG.VERSION = '<%- version %>';
     </script>
 
+    <script src="<%= assetsDomain %>lib/tuner.js"></script>
     <script src="<%= assetsDomain %>js/<%= clientType %>.js?<%= version %>"></script>
+
+
   </body>
 </html>
