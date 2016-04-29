@@ -1,6 +1,7 @@
 (function () {
   (typeof exports !== "undefined" && exports !== null ? exports : this).Tuner = function () {
     var init;
+    var curNote;
     init = function init(containerSelector, theme) {
       if (containerSelector == null) {
         containerSelector = '#Tuner';
@@ -662,6 +663,8 @@
           interp = 0.5 * ((l.y - r.y) / (l.y - 2 * p.y + r.y)) + p.x;
           freq = interp * bandwidth;
           _ref6 = Tuner.frequencyUtils.getPitch(freq), note = _ref6[0], cents = _ref6[1];
+          Tuner.curNote = _ref6;
+          // console.log(Tuner.curNote);
           return Tuner.Display.update(bufferCopy, note, cents);
         }
       } else {

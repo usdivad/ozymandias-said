@@ -75,6 +75,8 @@ export default class PlayerExperience extends soundworks.Experience {
     var tuner = new Tuner();
     console.log(tuner);
 
+    // this.receive
+
     // initialize rendering
     this.renderer = new PlayerRenderer(100, 100);
     this.view.addRenderer(this.renderer);
