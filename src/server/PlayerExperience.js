@@ -23,6 +23,10 @@ export default class PlayerExperience extends Experience {
     super.enter(client);
     // Send a message to all the other clients of the same type
     this.broadcast(client.type, client, 'play');
+
+    this.receive(client, 'midinote', (midinote) => {
+      console.log(midinote);
+    });
   }
 
   exit(client) {

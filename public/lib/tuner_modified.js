@@ -111,7 +111,7 @@
     }
     
     //David changed; added some vars
-    var curNote = noteToMidiNum("C0");
+    Tuner.curNote = noteToMidiNum("C1");
     
     
     canvas = $('.tuner canvas')[0];
@@ -300,18 +300,20 @@
               freq = interp * (sampleRate / fftSize);
               _ref5 = getPitch(freq), note = _ref5[0], diff = _ref5[1], freq = _ref5[2];
               display.draw(note, diff, freq);
+              console.log(note, diff, freq);
               
               //David changed this fn to add a console.log and push to array
-              if (noteToMidiNum(note) != curNote) {
-                //console.log(note, diff, freq);
+              // if (noteToMidiNum(note) != Tuner.curNote) {
+                console.log(note, diff, freq);
                 if (coll) {
                   addPitch(coll, noteToMidiNum(note));
                 }
-                curNote = noteToMidiNum(note);
-              }
-              else {
-                //console.log("same old");
-              }
+                Tuner.curNote = noteToMidiNum(note);
+                console.log(Tuner.curNote);
+              // }
+              // else {
+              //   //console.log("same old");
+              // }
               
             }
           } else {
@@ -447,16 +449,13 @@
         }
         pitch_num = (octave-1)*12 + conversion.indexOf(pitch);
         
-        //this engraves it too; bad oop
-        //thus you have to do this check in this fn, doesn't make sense...
-        
-        // if (!isNaN(pitch_num)) {
-        //     engraveNew(engrave_pitch, g_ctx, note); 
-        //     return pitch_num;
-        // }
-        // else {
-        //     return -1; //NaN
-        // }
+        if (!isNaN(pitch_num)) {
+            // engraveNew(engrave_pitch, g_ctx, note); 
+            return pitch_num;
+        }
+        else {
+            return -1; //NaN
+        }
     }
     
     //end David changed
