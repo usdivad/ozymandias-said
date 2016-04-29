@@ -73,25 +73,21 @@ export default class PlayerExperience extends soundworks.Experience {
 
     // pitch tracking using Tuner()
     this.tuner = new Tuner();
-    var prevNote = -1;
+    var prevNote = 0;
     var client = this;
     console.log(this.tuner);
 
     var getCurNote = function() {
-      var curNote = Tuner.curNote;
-      // console.log(curNote);
 
-      return function() {
         if (Tuner.curNote != prevNote) {
           client.send('midinote', Tuner.curNote);
           console.log("sent! " + prevNote + "->" + Tuner.curNote);
 
           prevNote = Tuner.curNote;
         }
-      };
     };
     
-    setInterval(getCurNote(), 100);
+    setInterval(getCurNote, 100);
 
     // this.receive
 

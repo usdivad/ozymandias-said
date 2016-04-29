@@ -169,6 +169,7 @@
       maxPeaks = 0;
       maxPeakCount = 0;
       try {
+        console.log("try");
         src = audioContext.createMediaStreamSource(stream);
         src.connect(lp);
         lp.connect(hp);
@@ -212,7 +213,7 @@
             /*
             noiseThrehold = noiseThreshold > 0.001 ? 0.001 : noiseThreshold;
             */
-            noiseThreshold = noiseThreshold > 0.5 ? 0.5 : noiseThreshold;
+            noiseThreshold = noiseThreshold > 0.001 ? 0.001 : noiseThreshold;
             
             noiseCount++;
           }
@@ -304,7 +305,7 @@
               
               //David changed this fn to add a console.log and push to array
               // if (noteToMidiNum(note) != Tuner.curNote) {
-                console.log(note, diff, freq);
+                // console.log(note, diff, freq);
                 if (coll) {
                   addPitch(coll, noteToMidiNum(note));
                 }
@@ -458,10 +459,17 @@
         }
     }
     
-    //end David changed
-    return navigator.getUserMedia({
-      audio: true
-    }, success, error);
+    // use mediaDevices.getUserMedia (navigator.getUserMedia is deprecated)
+    if (navigator.mediaDevices) {
+      return navigator.mediaDevices.getUserMedia({
+        audio: true
+      }).then(success).catch(error);
+    }
+    else {
+      return navigator.getUserMedia({
+        audio: true
+      }, success, error);
+    }
   };
 
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
