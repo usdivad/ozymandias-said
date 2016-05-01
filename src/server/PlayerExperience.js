@@ -36,6 +36,26 @@ export default class PlayerExperience extends Experience {
       var clientNotes = this.clientNotes;
       console.log("constructed chord " + chord + " from aggregated clientNotes " + Object.keys(this.clientNotes).map(function(k) { return clientNotes[k]; }));
 
+      // send chord data via MIDI
+      var midi = require('midi');
+      var output = new midi.output();
+      // output.getPortCount();
+      // output.getPortName(0);
+      output.openPort(0);
+      for (var i=0; i<chord.length; i++) {
+        var note = chord[i];
+        output.sendMessage([144, note, 90]); //  [command, pitch, velocity]
+        console.log("noteon " + note);
+        (function(n) {
+          setTimeout(function() {
+              // var n = note;
+              output.sendMessage([128, n, 40]);
+              console.log("noteoff" + n);
+          }, (Math.random()*2000) + 3000 );
+        })(note);
+      }
+      output.closePort();
+
     });
   }
 
