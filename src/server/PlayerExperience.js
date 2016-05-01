@@ -39,12 +39,24 @@ export default class PlayerExperience extends Experience {
       // send chord data via MIDI
       var midi = require('midi');
       var output = new midi.output();
+      var portIdx = 0;
+      var preferredDeviceName = "s";
       // output.getPortCount();
-      // output.getPortName(0);
+      for (var i=0; i<output.getPortCount(); i++) {
+        var portName = output.getPortName(i);
+        console.log(portName);
+        if (portName == preferredDeviceName) {
+          portIdx = i;
+          console.log("found!");
+          break;
+        }
+      }
+
+      console.log("sending midi to port " + output.getPortName(portIdx) + "("+portIdx+")");
       output.openPort(0);
       for (var i=0; i<chord.length; i++) {
         var note = chord[i];
-        output.sendMessage([144, note, 90]); //  [command, pitch, velocity]
+        output.sendMessage([144, note, 40]); //  [command, pitch, velocity]
         console.log("noteon " + note);
         (function(n) {
           setTimeout(function() {
@@ -74,7 +86,7 @@ export default class PlayerExperience extends Experience {
     // method 1: calculate dissonance using lg(LCM(x, y)) for each note
 
     // method 2: fourths, fifths, octaves
-    var intervals = [5, 7, 12];
+    var intervals = [-12, -7, -5, 5, 7, 12];
 
     while (notes.length < minChordSize) {
       var newNotes = [];

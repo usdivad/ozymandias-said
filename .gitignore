@@ -1,3 +1,9 @@
+# Ableton Live files
+*.wav
+*.mp3
+*.aif
+*.asd
+
 # Transpiled files and dependencies
 /node_modules
 /public/js
