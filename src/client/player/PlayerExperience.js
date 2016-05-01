@@ -36,6 +36,8 @@ export default class PlayerExperience extends soundworks.Experience {
     this.viewContent = { title: "Let's go!" };
     this.viewCtor = soundworks.CanvasView;
     this.view = this.createView();
+
+    this.words = "I met a traveller from an antique land Who said Two vast and trunkless legs of stone Stand in the desert Near them on the sand Half sunk a shattered visage lies whose frown And wrinkled lip and sneer of cold command Tell that its sculptor well those passions read Which yet survive stamped on these lifeless things The hand that mocked them and the heart that fed And on the pedestal these words appear My name is Ozymandias king of kings Look on my works ye Mighty and despair Nothing beside remains Round the decay Of that colossal wreck boundless and bare The lone and level sands stretch far away In Egypts sandy silence all alone Stands a gigantic Leg which far off throws The only shadow that the Desert knows I am great Ozymandias saith the stone The King of Kings this mighty City shows The wonders of my hand The Citys gone Nought but the Leg remaining to disclose The site of this forgotten Babylon We wonderand some Hunter may express Wonder like ours when thro the wilderness Where London stood holding the Wolf in chace He meets some fragment huge and stops to guess What powerful but unrecorded race Once dwelt in that annihilated place".toLowerCase().split(" ");
   }
 
   start() {
@@ -77,13 +79,23 @@ export default class PlayerExperience extends soundworks.Experience {
     var client = this;
     console.log(this.tuner);
 
+    // poem settings
+    // var numWords = 4;
+
     var getCurNote = function() {
 
         if (Tuner.curNote != prevNote) {
+          // send and update
           client.send('midinote', Tuner.curNote);
           console.log("sent! " + prevNote + "->" + Tuner.curNote);
-
           prevNote = Tuner.curNote;
+
+          // poem
+          var dice = Math.random();
+          if (dice > 0.5) {
+            var word = client.words[Math.floor(Math.random()*client.words.length)];
+            $("#poem").text(word);
+          }
         }
     };
     
